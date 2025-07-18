@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>💪 Pull-ups Tracker</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h1>💪 Pull-ups Diarios</h1>
-  <label>📅 Fecha:</label>
-  <input type="date" id="fecha" />
-  <label>🎯 Repeticiones:</label>
-  <input type="number" id="reps" placeholder="Ingrese repeticiones" />
-  <button onclick="guardarRepeticiones()">Guardar</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/public/logo.webp" type="image/webp" />
+    <title>Pull-ups Tracker</title>
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#007bff" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>💪 Pull-ups Diarios</h1>
+    <label>📅 Fecha:</label>
+    <input type="date" id="fecha" />
+    <label>🎯 Repeticiones:</label>
+    <input type="number" id="reps" placeholder="Ingrese repeticiones" />
+    <button onclick="guardarRepeticiones()">Guardar</button>
 
-  <h2>📊 Historial</h2>
-  <div id="navegacionMes">
-    <button id="mesAnterior">&#8592;</button>
-    <span id="mesActual"></span>
-    <button id="mesSiguiente">&#8594;</button>
-  </div>
-  <div id="estadisticas"></div>
-  <canvas id="grafico" height="200"></canvas>
+    <h2>📊 Historial</h2>
+    <div id="navegacionMes">
+      <button id="mesAnterior">&#8592;</button>
+      <span id="mesActual"></span>
+      <button id="mesSiguiente">&#8594;</button>
+    </div>
+    <div id="estadisticas"></div>
+    <canvas id="grafico" height="200"></canvas>
 
-  <script src="main.js"></script>
-</body>
+    <script src="main.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then((reg) => console.log("SW registrado", reg))
+            .catch((err) => console.error("SW error", err));
+        });
+      }
+    </script>
+  </body>
 </html>
