@@ -2,11 +2,11 @@ self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open('mi-app').then((cache) => {
       return cache.addAll([
-        '/',
-        '/index.html',
-        '/style.css',
-        '/script.js',
-        '/public/logo.webp'
+        './',
+        './index.html',
+        './style.css',
+        './main.js',
+        './public/logo.webp'
       ]);
     })
   );
