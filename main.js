@@ -41,7 +41,7 @@ function obtenerDatos() {
 function guardarRepeticiones() {
   const fecha = fechaInput.value;
   const reps = parseInt(document.getElementById("reps").value);
-  if (!fecha || isNaN(reps) || reps <= 0) {
+  if (!fecha || isNaN(reps) || reps < 0) {
     alert("Datos inválidos");
     return;
   }
@@ -53,6 +53,8 @@ function guardarRepeticiones() {
 }
 
 let grafico;
+window.grafico = grafico;
+
 function actualizarGrafico() {
   const datos = obtenerDatos();
   const { año, mes } = mesActual;
@@ -91,12 +93,16 @@ function actualizarGrafico() {
 
   if (grafico) grafico.destroy();
 
+  // Calcular el valor máximo dinámico para el eje Y
+  const maxValor = Math.max(...datosReps, 10); 
+  const maxY = maxValor + 5;
+
   grafico = new Chart(ctx, {
     type: "bar",
     data: {
       labels: labels,
       datasets: [{
-        label: "Repeticiones",
+        label: (JSON.parse(localStorage.getItem('configuracion'))?.itemName) || "Repeticiones",
         data: datosReps,
         backgroundColor: "rgba(75, 192, 192, 0.6)",
         borderColor: "rgba(75, 192, 192, 1)",
@@ -105,17 +111,18 @@ function actualizarGrafico() {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false, // Permite controlar la altura fija por CSS
+      maintainAspectRatio: false,
       scales: {
         y: {
           beginAtZero: true,
           ticks: { stepSize: 5 },
           min: 0,
-          max: 100 // Ajusta este valor según el máximo esperado de repeticiones
+          max: maxY
         }
       }
     }
   });
+  window.grafico = grafico;
 }
 
 // Inicialización
